@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.17.0)
 project(stopwatch VERSION 0.1.0)
 
-option(BUILD_EXAMPLES "Build project examples" OFF)
+cmake_dependent_option(STOPWATCH_BUILD_EXAMPLES
+    "Build stopwatch examples" ON
+    "CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME" OFF
+)
 
 # Main library =========================================================================================================
 add_library(stopwatch INTERFACE)
@@ -24,7 +27,7 @@ install(DIRECTORY src/
 )
 
 # Examples =============================================================================================================
-if(BUILD_EXAMPLES)
+if(STOPWATCH_BUILD_EXAMPLES)
 	add_executable(stopwatch_basic_usage "examples/basic_usage.cpp")
 	target_link_libraries(stopwatch_basic_usage PRIVATE stopwatch)
 
